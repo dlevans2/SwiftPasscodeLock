@@ -14,13 +14,13 @@ class EventSubscriber {
     let eventName: String
     let object: AnyObject?
     
-    let notificationCenter: NSNotificationCenter
+    let notificationCenter: NotificationCenter
     
     init(target: AnyObject,
          selector: Selector,
          eventName: String,
          object: AnyObject? = nil,
-         notificationCenter: NSNotificationCenter = NSNotificationCenter.defaultCenter()) {
+         notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.target = target
         self.selector = selector
         self.eventName = eventName
@@ -33,10 +33,10 @@ class EventSubscriber {
     }
     
     func subscribe() {
-        self.notificationCenter.addObserver(self, selector: #selector(handleEvent), name: self.eventName, object: self.object)
+        self.notificationCenter.addObserver(self, selector: #selector(handleEvent), name: NSNotification.Name(rawValue: self.eventName), object: self.object)
     }
     
-    @objc func handleEvent(notification: NSNotification) {
-        target?.performSelector(self.selector, withObject: notification)
+    @objc func handleEvent(_ notification: Notification) {
+        let _ = target?.perform(self.selector, with: notification)
     }
 }

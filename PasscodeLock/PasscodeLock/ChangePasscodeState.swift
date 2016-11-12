@@ -21,15 +21,15 @@ struct ChangePasscodeState: PasscodeLockStateType {
         description = localizedStringFor("PasscodeLockChangeDescription", comment: "Change passcode description")
     }
     
-    func acceptPasscode(passcode: [String], fromLock lock: PasscodeLockType) {
+    func acceptPasscode(_ passcode: [String], fromLock lock: PasscodeLockType) {
         
         guard let currentPasscode = lock.repository.passcode else {
-            lock.delegate?.passcodeLockDidFail(lock, reason: .RepositoryHasNoPasscode)
+            lock.delegate?.passcodeLockDidFail(lock, reason: .repositoryHasNoPasscode)
             return
         }
         
         if lock.configuration.throttlePolicy.isThrottled {
-            lock.delegate?.passcodeLockDidFail(lock, reason: .Throttled)
+            lock.delegate?.passcodeLockDidFail(lock, reason: .throttled)
             return
         }
         
@@ -42,10 +42,10 @@ struct ChangePasscodeState: PasscodeLockStateType {
         } else {
             lock.configuration.throttlePolicy.markFailure()
             if lock.configuration.throttlePolicy.isThrottled {
-                lock.delegate?.passcodeLockDidFail(lock, reason: .Throttled)
+                lock.delegate?.passcodeLockDidFail(lock, reason: .throttled)
                 return
             } else {
-                lock.delegate?.passcodeLockDidFail(lock, reason: .IncorrectPasscode)
+                lock.delegate?.passcodeLockDidFail(lock, reason: .incorrectPasscode)
             }
         }
     }

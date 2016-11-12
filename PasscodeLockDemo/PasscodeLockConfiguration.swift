@@ -10,6 +10,8 @@ import Foundation
 import PasscodeLock
 
 struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
+    public var throttlePolicy: ThrottlePolicy
+
     
     let repository: PasscodeRepositoryType
     let passcodeLength = 4

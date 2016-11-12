@@ -9,6 +9,8 @@
 import Foundation
 
 class FakePasscodeLockConfiguration: PasscodeLockConfigurationType {
+    public var throttlePolicy: ThrottlePolicy
+
     
     let repository: PasscodeRepositoryType
     let passcodeLength = 4
@@ -20,5 +22,6 @@ class FakePasscodeLockConfiguration: PasscodeLockConfigurationType {
     init(repository: PasscodeRepositoryType) {
         
         self.repository = repository
+        self.throttlePolicy = NoThrottlePolicy()
     }
 }

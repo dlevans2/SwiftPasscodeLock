@@ -20,7 +20,7 @@ public struct ThrottleMessage {
 
 public protocol ThrottlePolicy {
     var isThrottled: Bool { get }
-    var throttleRemovedAt: NSTimeInterval { get }
+    var throttleRemovedAt: TimeInterval { get }
     var message: ThrottleMessage { get }
     func markSuccess() -> Void
     func markFailure() -> Void
@@ -28,7 +28,7 @@ public protocol ThrottlePolicy {
 
 public struct NoThrottlePolicy: ThrottlePolicy {
     public let isThrottled: Bool = false
-    public let throttleRemovedAt: NSTimeInterval = -1
+    public let throttleRemovedAt: TimeInterval = -1
     public var message: ThrottleMessage = ThrottleMessage(title: nil,
                                                    body: "This message should never be shown because this policy does no throttling.")
     public func markFailure() { }
